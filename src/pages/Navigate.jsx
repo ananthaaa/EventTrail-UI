@@ -71,10 +71,10 @@ const Navigate = () => {
     progressRef.current = outdoorProgress;
   }, [outdoorProgress]);
 
-  const startLat = 10.0185;
-  const startLng = 76.3012;
-  const destLat = activeEvent?.locationDetails?.entranceLat || 10.0261;
-  const destLng = activeEvent?.locationDetails?.entranceLng || 76.3083;
+  const startLat = 10.1768;
+  const startLng = 76.4290;
+  const destLat = activeEvent?.locationDetails?.entranceLat || 10.1788;
+  const destLng = activeEvent?.locationDetails?.entranceLng || 76.4320;
 
   const [currentLat, setCurrentLat] = useState(startLat);
   const [currentLng, setCurrentLng] = useState(startLng);

@@ -43,7 +43,7 @@ const AdminEventForm = () => {
     { time: '11:00 AM', title: 'Main Panel Session', desc: 'Speaker presentations and open Q&A.' }
   ]);
 
-  const [mapPosition, setMapPosition] = useState({ lat: 10.026100, lng: 76.308300 });
+  const [mapPosition, setMapPosition] = useState({ lat: 10.177975, lng: 76.431153 });
   const [indoorSteps, setIndoorSteps] = useState([
     'Enter main entrance',
     'Turn left at reception desk',
