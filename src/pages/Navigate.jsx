@@ -8,15 +8,9 @@ import { NotificationContext } from '../context/NotificationContext';
 import mockVenues from '../data/venues.json';
 import StepTracker from '../components/ui/StepTracker';
 import { MapPin, Navigation, CheckCircle2, ChevronRight, ArrowLeft, Info, Compass } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
+import { Marker, Polyline } from 'react-leaflet';
+import CampusMap from '../components/ui/CampusMap';
 import L from 'leaflet';
-
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
 
 const studentIcon = L.divIcon({
   className: 'custom-student-icon',
@@ -190,28 +184,24 @@ const Navigate = () => {
       {currentPhase === 'outdoor' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="bg-bg-surface border border-border-subtle rounded-3xl h-[500px] relative overflow-hidden z-0">
-              <MapContainer center={[(startLat + destLat)/2, (startLng + destLng)/2]} zoom={15} scrollWheelZoom={false} style={{ height: '100%', width: '100%', zIndex: 0 }}>
-                <TileLayer
-                  attribution='&copy; OpenStreetMap'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+            <div className="bg-white border-3 border-black h-[500px] relative z-0 neo-shadow-lg">
+              <CampusMap center={[(startLat + destLat)/2, (startLng + destLng)/2]}>
                 <Marker position={[destLat, destLng]} />
                 <Marker position={[currentLat, currentLng]} icon={studentIcon} />
-                <Polyline positions={[[startLat, startLng], [destLat, destLng]]} pathOptions={{ color: '#FF5A1F', dashArray: '8, 8', weight: 4 }} />
-              </MapContainer>
+                <Polyline positions={[[startLat, startLng], [destLat, destLng]]} pathOptions={{ color: '#000', dashArray: '8, 8', weight: 4 }} />
+              </CampusMap>
 
-              <div className="absolute bottom-6 left-6 right-6 bg-bg-surface/90 backdrop-blur-md border border-border-subtle p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4 z-10">
+              <div className="absolute bottom-6 left-6 right-6 bg-white border-3 border-black p-5 flex flex-col sm:flex-row justify-between items-center gap-4 z-10 shadow-[4px_4px_0px_0px_#000]">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center text-accent">
-                    <Compass className="w-6 h-6 animate-spin-slow" />
+                  <div className="w-12 h-12 bg-pastel-yellow border-2 border-black flex items-center justify-center text-black shadow-[2px_2px_0px_0px_#000]">
+                    <Compass className="w-6 h-6 animate-spin-slow" strokeWidth={3} />
                   </div>
                   <div>
-                    <span className="font-medium text-text-primary block text-lg">{outdoorStatus}</span>
-                    <span className="text-sm text-text-secondary">Walking Route Active</span>
+                    <span className="font-black text-black uppercase tracking-wider block text-lg">{outdoorStatus}</span>
+                    <span className="text-sm font-bold text-black/70 uppercase">Walking Route Active</span>
                   </div>
                 </div>
-                <div className="bg-bg-primary border border-border-subtle px-4 py-2 rounded-xl text-text-primary font-mono font-medium">
+                <div className="bg-pastel-mint border-3 border-black px-4 py-2 text-black font-bold uppercase tracking-wider shadow-[2px_2px_0px_0px_#000]">
                   {Math.round(distanceRemaining)}m remaining
                 </div>
               </div>
@@ -219,35 +209,35 @@ const Navigate = () => {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-bg-surface border border-border-subtle rounded-3xl p-8 space-y-6">
-              <h3 className="font-display font-bold text-xl text-text-primary">Outdoor Navigation HUD</h3>
+            <div className="bg-white border-3 border-black p-8 space-y-6 neo-shadow">
+              <h3 className="font-display font-black text-2xl text-black uppercase">Outdoor Navigation HUD</h3>
 
               <div className="space-y-4">
-                <div className="flex justify-between items-center border-b border-border-subtle pb-3">
-                  <span className="text-text-secondary text-sm">Target Building</span>
-                  <span className="text-text-primary font-medium">{venue.building}</span>
+                <div className="flex justify-between items-center border-b-3 border-black border-dashed pb-3">
+                  <span className="text-black/70 font-bold uppercase tracking-wider text-xs">Target Building</span>
+                  <span className="text-black font-black uppercase tracking-wider">{venue.building}</span>
                 </div>
-                <div className="flex justify-between items-center border-b border-border-subtle pb-3">
-                  <span className="text-text-secondary text-sm">GPS Distance</span>
-                  <span className="text-text-primary font-medium">{Math.round(distanceRemaining)} metres</span>
+                <div className="flex justify-between items-center border-b-3 border-black border-dashed pb-3">
+                  <span className="text-black/70 font-bold uppercase tracking-wider text-xs">GPS Distance</span>
+                  <span className="text-black font-black uppercase tracking-wider">{Math.round(distanceRemaining)} metres</span>
                 </div>
                 <div className="flex justify-between items-center pb-3">
-                  <span className="text-text-secondary text-sm">Estimated walk</span>
-                  <span className="text-text-primary font-medium">{venue.timeEstimation}</span>
+                  <span className="text-black/70 font-bold uppercase tracking-wider text-xs">Estimated walk</span>
+                  <span className="text-black font-black uppercase tracking-wider">{venue.timeEstimation}</span>
                 </div>
               </div>
 
               <button
                 onClick={simulateArrival}
-                className="w-full bg-accent hover:bg-accent-hover text-accent-contrast font-medium py-3 rounded-xl transition-colors"
+                className="w-full bg-pastel-mint border-3 border-black text-black font-black uppercase tracking-wider py-3 shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all"
               >
                 Simulate Geofence Arrival
               </button>
             </div>
 
-            <div className="bg-bg-surface-alt border border-border-subtle p-6 rounded-3xl flex gap-4 items-start">
-              <Info size={24} className="text-accent shrink-0 mt-1" />
-              <p className="text-sm text-text-secondary leading-relaxed">
+            <div className="bg-pastel-peach border-3 border-black p-6 flex gap-4 items-start neo-shadow-sm">
+              <Info size={24} className="text-black shrink-0 mt-1" strokeWidth={3} />
+              <p className="text-sm text-black font-bold leading-relaxed uppercase tracking-wide">
                 The app is simulating your walking coordinates. In a production build, your device's background GPS coordinates will trigger the geofence to switch automatically.
               </p>
             </div>
@@ -258,12 +248,12 @@ const Navigate = () => {
       {(currentPhase === 'indoor' || isNavCompleted) && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-bg-surface border border-border-subtle rounded-3xl p-6">
+            <div className="bg-white border-3 border-black p-6 neo-shadow">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="font-medium text-text-primary">Indoor Waypoint Map (2nd Floor Block B)</h3>
+                <h3 className="font-display font-black text-2xl text-black uppercase">Indoor Waypoint Map (2nd Floor Block B)</h3>
               </div>
 
-              <div className="w-full aspect-[4/3] bg-bg-primary relative overflow-hidden rounded-2xl border border-border-subtle">
+              <div className="w-full aspect-[4/3] bg-pastel-yellow relative overflow-hidden border-3 border-black shadow-[4px_4px_0px_0px_#000]">
                 <svg viewBox="0 0 500 350" className="w-full h-full">
                   <rect x="20" y="20" width="460" height="310" fill="none" stroke="#333" strokeWidth="2" />
                   
@@ -336,22 +326,22 @@ const Navigate = () => {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-bg-surface border border-success rounded-3xl p-8 text-center space-y-6 shadow-[0_0_30px_rgba(0,182,122,0.1)]"
+                className="bg-pastel-mint border-3 border-black p-8 text-center space-y-6 neo-shadow"
               >
-                <div className="w-20 h-20 bg-success/20 rounded-full mx-auto flex items-center justify-center">
-                  <CheckCircle2 className="w-10 h-10 text-success" />
+                <div className="w-20 h-20 bg-white border-3 border-black flex items-center justify-center mx-auto shadow-[4px_4px_0px_0px_#000]">
+                  <CheckCircle2 className="w-10 h-10 text-black" strokeWidth={3} />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-3xl text-text-primary mb-3">You Have Arrived!</h3>
-                  <p className="text-text-secondary leading-relaxed">
+                  <h3 className="font-display font-black text-3xl text-black uppercase tracking-tight mb-3">You Have Arrived!</h3>
+                  <p className="text-black font-bold uppercase tracking-wide leading-relaxed">
                     You have reached the venue destination. Present your ticket barcode to the host organizer to scan and check in. Enjoy the event!
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-3 pt-4">
+                <div className="flex flex-col gap-4 pt-4">
                   <button
                     onClick={() => navigate(`/student/rsvp-confirmation/${activeEvent.id}`)}
-                    className="w-full bg-accent hover:bg-accent-hover text-accent-contrast font-medium py-4 rounded-xl transition-colors"
+                    className="w-full bg-pastel-yellow border-3 border-black text-black font-black uppercase tracking-wider py-4 shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all"
                   >
                     Show Ticket Barcode
                   </button>
@@ -360,15 +350,15 @@ const Navigate = () => {
                       resetNavigation();
                       navigate('/');
                     }}
-                    className="w-full bg-bg-surface-alt hover:bg-bg-primary border border-border-subtle text-text-primary font-medium py-4 rounded-xl transition-colors"
+                    className="w-full bg-white border-3 border-black text-black font-black uppercase tracking-wider py-4 shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all"
                   >
                     Finish Journey
                   </button>
                 </div>
               </motion.div>
             ) : (
-              <div className="bg-bg-surface border border-border-subtle rounded-3xl p-8">
-                <h3 className="font-display font-bold text-xl text-text-primary mb-6">Navigation Steps</h3>
+              <div className="bg-white border-3 border-black p-8 neo-shadow">
+                <h3 className="font-display font-black text-2xl text-black uppercase mb-6">Navigation Steps</h3>
                 
                 <div className="mb-8">
                   <StepTracker 
@@ -379,20 +369,19 @@ const Navigate = () => {
                   />
                 </div>
 
-                <div className="flex gap-3 pt-6 border-t border-border-subtle">
+                <div className="flex gap-4 pt-6 border-t-3 border-black border-dashed">
                   <button
                     onClick={handlePrevStep}
                     disabled={activeIndoorStep === 0}
-                    className="flex-1 py-3 px-4 bg-bg-surface-alt hover:bg-bg-primary disabled:opacity-50 disabled:cursor-not-allowed border border-border-subtle rounded-xl text-text-primary font-medium transition-colors"
+                    className="flex-1 py-3 px-4 bg-white border-3 border-black disabled:opacity-50 disabled:cursor-not-allowed text-black font-black uppercase tracking-wider shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 transition-all"
                   >
                     Previous
                   </button>
                   <button
                     onClick={handleNextStep}
-                    className="flex-[2] py-3 px-4 bg-accent hover:bg-accent-hover text-accent-contrast font-medium rounded-xl flex items-center justify-center gap-2 transition-colors"
+                    className="flex-1 py-3 px-4 bg-pastel-mint border-3 border-black text-black font-black uppercase tracking-wider shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 transition-all"
                   >
-                    {isLastIndoorStep ? "Mark Arrived" : "Next Step"}
-                    <ChevronRight size={18} />
+                    {activeIndoorStep === indoorStepsArray.length - 1 ? 'Finish' : 'Next Step'}
                   </button>
                 </div>
               </div>

@@ -6,6 +6,7 @@ import mockClubs from '../data/clubs.json';
 import mockSpeakers from '../data/speakers.json';
 import { ArrowLeft, Users, Calendar, ArrowRight, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Badge from '../components/ui/Badge';
 
 const ClubProfile = () => {
   const { id } = useParams();
@@ -17,12 +18,12 @@ const ClubProfile = () => {
   if (!club) {
     return (
       <PageShell>
-        <div className="max-w-md mx-auto text-center mt-20">
-          <h3 className="font-display font-bold text-3xl text-text-primary mb-4">Club Not Found</h3>
-          <p className="text-text-secondary mb-8">
+        <div className="max-w-md mx-auto text-center mt-20 bg-white border-3 border-black p-8 neo-shadow">
+          <h3 className="font-display font-black uppercase text-3xl text-black mb-4">Club Not Found</h3>
+          <p className="text-black/70 font-bold uppercase tracking-wide mb-8">
             The student organization you are looking for does not exist or has been removed.
           </p>
-          <Link to="/clubs" className="inline-flex items-center gap-2 bg-bg-surface border border-border-subtle px-6 py-3 rounded-full text-text-primary hover:text-accent transition-colors">
+          <Link to="/clubs" className="inline-flex items-center gap-2 bg-accent-yellow border-3 border-black px-6 py-3 text-black font-bold uppercase tracking-wider hover:bg-black hover:text-accent-yellow transition-colors shadow-[4px_4px_0px_0px_#000]">
             <ArrowLeft size={16} />
             Back to Directory
           </Link>
@@ -40,7 +41,7 @@ const ClubProfile = () => {
       <div className="mb-8">
         <Link
           to="/clubs"
-          className="inline-flex items-center gap-2 text-sm text-text-tertiary hover:text-accent transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-bold text-black uppercase tracking-wider hover:underline underline-offset-4 decoration-2"
         >
           <ArrowLeft size={16} />
           Back to Directory
@@ -52,20 +53,20 @@ const ClubProfile = () => {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`lg:col-span-2 rounded-3xl overflow-hidden bg-gradient-to-br ${club.bgGrad} relative p-10 md:p-12 flex flex-col md:flex-row items-center md:items-end gap-8`}
+          className={`lg:col-span-2 bg-pastel-mint border-3 border-black neo-shadow-lg p-8 md:p-12 flex flex-col md:flex-row items-center md:items-end gap-8 bg-grid-dots relative`}
         >
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-white/20"></div>
           
-          <div className="relative z-10 w-32 h-32 bg-bg-primary rounded-full flex items-center justify-center font-display font-bold text-4xl text-text-primary border-4 border-bg-primary shadow-2xl">
+          <div className="relative z-10 w-32 h-32 bg-white flex items-center justify-center font-display font-black text-5xl text-black border-3 border-black shadow-[4px_4px_0px_0px_#000]">
             {club.logo}
           </div>
           
-          <div className="relative z-10 text-center md:text-left">
+          <div className="relative z-10 text-center md:text-left flex-grow">
             <div className="flex justify-center md:justify-start gap-3 mb-4">
-              <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs uppercase tracking-wider font-medium">Chartered</span>
-              <span className="px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent text-xs uppercase tracking-wider font-medium">Active</span>
+              <Badge variant="white" className="shadow-[2px_2px_0px_0px_#000]">Chartered</Badge>
+              <Badge variant="yellow" className="shadow-[2px_2px_0px_0px_#000]">Active</Badge>
             </div>
-            <h1 className="font-display font-bold text-4xl md:text-5xl text-white tracking-tight">
+            <h1 className="font-display font-black text-4xl md:text-5xl text-black tracking-tight uppercase line-clamp-2">
               {club.name}
             </h1>
           </div>
@@ -75,21 +76,21 @@ const ClubProfile = () => {
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-bg-surface border border-border-subtle rounded-3xl p-8 flex flex-col justify-center"
+          className="bg-pastel-peach border-3 border-black neo-shadow p-8 flex flex-col justify-center"
         >
-          <div className="flex items-center gap-2 mb-6">
-            <Activity className="w-5 h-5 text-accent" />
-            <h3 className="font-medium text-text-secondary uppercase tracking-widest text-xs">At a Glance</h3>
+          <div className="flex items-center gap-2 mb-6 border-b-3 border-black pb-4">
+            <Activity className="w-6 h-6 text-black" strokeWidth={3} />
+            <h3 className="font-display font-black text-black uppercase tracking-widest text-lg">At a Glance</h3>
           </div>
           
           <div className="space-y-6">
             <div>
-              <p className="text-text-tertiary text-sm mb-1">Members</p>
-              <p className="text-2xl font-display font-bold text-text-primary">{club.memberIds.length}</p>
+              <p className="text-black/60 font-bold uppercase text-sm mb-1">Members</p>
+              <p className="text-4xl font-display font-black text-black">{club.memberIds.length}</p>
             </div>
-            <div className="border-t border-border-subtle pt-4">
-              <p className="text-text-tertiary text-sm mb-1">Hosted Events</p>
-              <p className="text-2xl font-display font-bold text-text-primary">{hostedEvents.length}</p>
+            <div className="border-t-3 border-black border-dashed pt-4">
+              <p className="text-black/60 font-bold uppercase text-sm mb-1">Hosted Events</p>
+              <p className="text-4xl font-display font-black text-black">{hostedEvents.length}</p>
             </div>
           </div>
         </motion.div>
@@ -98,37 +99,37 @@ const ClubProfile = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-12">
           {/* About Club */}
-          <section>
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-accent font-bold text-xs uppercase tracking-widest">01</span>
-              <h2 className="font-display font-bold text-2xl text-text-primary">About Our Club</h2>
+          <section className="bg-white border-3 border-black p-8 neo-shadow">
+            <div className="flex items-center gap-4 mb-6 border-b-3 border-black pb-4">
+              <div className="bg-accent-yellow border-2 border-black w-8 h-8 flex items-center justify-center font-black shadow-[2px_2px_0px_0px_#000]">01</div>
+              <h2 className="font-display font-black text-3xl text-black uppercase">About Our Club</h2>
             </div>
-            <p className="text-text-secondary leading-relaxed text-lg">
+            <p className="text-black font-medium leading-relaxed text-lg">
               {club.description}
             </p>
           </section>
 
           {/* Members Showcase */}
-          <section>
-            <div className="flex items-center gap-2 mb-6">
-              <span className="text-accent font-bold text-xs uppercase tracking-widest">02</span>
-              <h2 className="font-display font-bold text-2xl text-text-primary">Executive Committee</h2>
+          <section className="bg-white border-3 border-black p-8 neo-shadow">
+            <div className="flex items-center gap-4 mb-6 border-b-3 border-black pb-4">
+              <div className="bg-pastel-mint border-2 border-black w-8 h-8 flex items-center justify-center font-black shadow-[2px_2px_0px_0px_#000]">02</div>
+              <h2 className="font-display font-black text-3xl text-black uppercase">Executive Committee</h2>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {members.map((member) => (
-                <div key={member.id} className="bg-bg-surface border border-border-subtle rounded-2xl p-4 flex items-center gap-4">
+                <div key={member.id} className="bg-pastel-yellow border-3 border-black p-4 flex items-center gap-4 neo-shadow-sm hover:translate-x-1 hover:-translate-y-1 hover:neo-shadow transition-all">
                   <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center font-display font-bold text-lg"
+                    className="w-14 h-14 border-3 border-black flex items-center justify-center font-display font-black text-2xl shadow-[2px_2px_0px_0px_#000]"
                     style={{ backgroundColor: member.avatarColor, color: '#fff' }}
                   >
                     {member.avatarText}
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-text-primary text-lg">
+                    <h3 className="font-display font-black text-black text-lg uppercase line-clamp-1">
                       {member.name}
                     </h3>
-                    <span className="text-text-tertiary text-sm">
+                    <span className="text-black/70 font-bold uppercase text-xs tracking-wider">
                       {member.role}
                     </span>
                   </div>
@@ -140,9 +141,9 @@ const ClubProfile = () => {
 
         {/* Right 1 Column: Hosted Events */}
         <div className="space-y-6">
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-accent font-bold text-xs uppercase tracking-widest">03</span>
-            <h2 className="font-display font-bold text-2xl text-text-primary">Upcoming Events</h2>
+          <div className="flex items-center gap-4 mb-6 bg-white border-3 border-black p-4 neo-shadow">
+            <div className="bg-pastel-peach border-2 border-black w-8 h-8 flex items-center justify-center font-black shadow-[2px_2px_0px_0px_#000]">03</div>
+            <h2 className="font-display font-black text-2xl text-black uppercase tracking-tight m-0">Upcoming Events</h2>
           </div>
 
           {hostedEvents.length > 0 ? (
@@ -151,19 +152,19 @@ const ClubProfile = () => {
                 <div
                   key={evt.id}
                   onClick={() => navigate(`/event/${evt.id}`)}
-                  className="bg-bg-surface border border-border-subtle rounded-2xl p-5 cursor-pointer hover:border-accent transition-colors group"
+                  className="bg-white border-3 border-black p-5 cursor-pointer hover:-translate-y-1 neo-shadow-sm hover:neo-shadow-lg transition-all group"
                 >
-                  <div className="flex items-center gap-2 text-xs font-medium text-text-tertiary mb-3">
-                    <Calendar className="w-4 h-4" />
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black/60 mb-3 border-b-2 border-black/20 pb-2">
+                    <Calendar className="w-4 h-4 text-black" />
                     <span>{evt.date}</span>
                   </div>
-                  <h3 className="font-display font-bold text-lg text-text-primary mb-6 group-hover:text-accent transition-colors">
+                  <h3 className="font-display font-black text-xl text-black uppercase mb-4 group-hover:text-black/70 transition-colors">
                     {evt.title}
                   </h3>
                   
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-text-secondary">{evt.seatsAvailable} seats left</span>
-                    <span className="text-accent font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Badge variant="yellow" className="shadow-[1px_1px_0px_0px_#000]">{evt.seatsAvailable} seats left</Badge>
+                    <span className="bg-black text-white px-3 py-1 font-bold uppercase tracking-wider text-xs shadow-[2px_2px_0px_0px_#FFDB58] flex items-center gap-1">
                       Details <ArrowRight size={14} />
                     </span>
                   </div>
@@ -171,9 +172,11 @@ const ClubProfile = () => {
               ))}
             </div>
           ) : (
-            <div className="bg-bg-surface border border-border-subtle border-dashed rounded-2xl p-8 text-center">
-              <Calendar className="w-10 h-10 mx-auto mb-4 text-text-tertiary" />
-              <p className="text-text-secondary text-sm">No upcoming events scheduled.</p>
+            <div className="bg-bg-neobrutalist border-3 border-black border-dashed p-8 text-center">
+              <div className="w-12 h-12 bg-white border-3 border-black flex items-center justify-center mx-auto mb-4 rotate-3 shadow-[2px_2px_0px_0px_#000]">
+                <Calendar className="w-6 h-6 text-black" />
+              </div>
+              <p className="text-black font-bold uppercase tracking-wider text-sm">No upcoming events scheduled.</p>
             </div>
           )}
         </div>

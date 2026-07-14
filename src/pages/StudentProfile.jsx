@@ -1,61 +1,14 @@
-import React, { useContext, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useContext } from 'react';
 import { RoleContext } from '../context/RoleContext';
 import { RsvpContext } from '../context/RsvpContext';
 import PageShell from '../components/layout/PageShell';
-import usersData from '../data/users.json';
 import RSVPTicket from '../components/ui/RSVPTicket';
-import { User, LogIn } from 'lucide-react';
+import Badge from '../components/ui/Badge';
+import { BookOpen } from 'lucide-react';
 
 const StudentProfile = () => {
-  const { currentRole, toggleRole } = useContext(RoleContext);
+  const { currentUser } = useContext(RoleContext);
   const { userRsvps, events } = useContext(RsvpContext);
-  
-  // Fake login state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const studentUser = usersData.find(u => u.id === 'student-1');
-
-  if (!isLoggedIn) {
-    return (
-      <PageShell>
-        <div className="max-w-md mx-auto mt-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-bg-surface p-8 rounded-2xl border border-border-subtle text-center"
-          >
-            <div className="w-16 h-16 bg-bg-surface-alt rounded-full flex items-center justify-center mx-auto mb-6">
-              <User className="w-8 h-8 text-accent" />
-            </div>
-            <h1 className="text-3xl font-display font-bold text-text-primary mb-2">Student Login</h1>
-            <p className="text-text-secondary mb-8">Sign in to view your RSVPs and tickets.</p>
-            
-            <div className="space-y-4">
-              <input 
-                type="text" 
-                placeholder="Student ID or Email" 
-                className="w-full bg-bg-primary border border-border-subtle rounded-full px-6 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
-                defaultValue="alex.rivera@campus.edu"
-              />
-              <input 
-                type="password" 
-                placeholder="Password" 
-                className="w-full bg-bg-primary border border-border-subtle rounded-full px-6 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
-                defaultValue="password123"
-              />
-              <button 
-                onClick={() => setIsLoggedIn(true)}
-                className="w-full bg-accent hover:bg-accent-hover text-accent-contrast font-medium rounded-full px-6 py-3 flex items-center justify-center gap-2 transition-colors mt-4"
-              >
-                <span>Sign In</span>
-                <LogIn className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </PageShell>
-    );
-  }
 
   // Find actual event details for user's RSVPs
   const myTickets = Object.entries(userRsvps).map(([eventId, rsvpInfo]) => {
@@ -64,42 +17,51 @@ const StudentProfile = () => {
   });
 
   return (
-    <PageShell>
-      <div className="max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center gap-6 mb-12 bg-bg-surface p-8 rounded-3xl border border-border-subtle">
-          <img 
-            src={studentUser.avatar} 
-            alt={studentUser.name} 
-            className="w-24 h-24 rounded-full border-2 border-accent"
-          />
+    <PageShell useGridPattern={false}>
+      <div className="max-w-4xl mx-auto space-y-8">
+        
+        {/* Profile Header Card */}
+        <div className="bg-pastel-peach border-3 border-black p-8 neo-shadow-lg flex flex-col md:flex-row items-center gap-6">
+          {currentUser?.avatar ? (
+            <img 
+              src={currentUser.avatar} 
+              alt={currentUser.name} 
+              className="w-32 h-32 rounded-full border-3 border-black shadow-[4px_4px_0px_0px_#000] object-cover bg-white shrink-0"
+            />
+          ) : (
+            <div className="w-32 h-32 rounded-full border-3 border-black shadow-[4px_4px_0px_0px_#000] bg-white flex items-center justify-center shrink-0">
+              <BookOpen size={40} className="text-black" />
+            </div>
+          )}
+          
           <div className="text-center md:text-left flex-grow">
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary">{studentUser.name}</h1>
-            <p className="text-text-secondary">Computer Science, Class of 2026</p>
-          </div>
-          <div className="bg-bg-primary p-4 rounded-xl border border-border-subtle flex flex-col items-center">
-            <span className="text-text-tertiary text-xs uppercase tracking-wider mb-2">Developer Mode</span>
-            <button 
-              onClick={toggleRole}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${currentRole === 'admin' ? 'bg-accent text-accent-contrast' : 'bg-bg-surface border border-border-subtle text-text-primary'}`}
-            >
-              {currentRole === 'admin' ? 'Admin Active' : 'Switch to Admin'}
-            </button>
+            <h1 className="text-4xl md:text-5xl font-display font-black text-black uppercase mb-3">
+              {currentUser?.name || 'Alex Student'}
+            </h1>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+              <Badge variant="mint" className="shadow-[2px_2px_0px_0px_#000]">Computer Science</Badge>
+              <Badge variant="yellow" className="shadow-[2px_2px_0px_0px_#000]">Class of 2026</Badge>
+              <Badge variant="white" className="shadow-[2px_2px_0px_0px_#000]">{currentUser?.email || 'student@campus.edu'}</Badge>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-2xl font-display font-bold text-text-primary">My Tickets & RSVPs</h2>
-            <span className="bg-bg-surface border border-border-subtle text-text-secondary px-3 py-1 rounded-full text-sm">
-              {myTickets.length}
-            </span>
+        {/* Tickets Section */}
+        <div className="bg-white border-3 border-black p-6 md:p-8 neo-shadow">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b-3 border-black">
+            <h2 className="text-2xl md:text-3xl font-display font-black text-black uppercase tracking-tight m-0">
+              My Tickets & RSVPs
+            </h2>
+            <Badge variant="dark" className="text-base px-4 shadow-[2px_2px_0px_0px_#FFDB58]">
+              {myTickets.length} Total
+            </Badge>
           </div>
 
           {myTickets.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {myTickets.map((ticket, index) => (
                 <RSVPTicket 
-                  key={index} 
+                  key={index}
                   event={ticket.event} 
                   rsvpStatus={ticket.rsvpStatus} 
                   ticketNumber={ticket.ticketNumber} 
@@ -107,8 +69,11 @@ const StudentProfile = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 bg-bg-surface rounded-2xl border border-border-subtle border-dashed">
-              <p className="text-text-secondary">You haven't RSVP'd to any events yet.</p>
+            <div className="text-center py-16 bg-bg-neobrutalist border-3 border-black border-dashed">
+              <div className="w-16 h-16 bg-white border-3 border-black flex items-center justify-center mx-auto mb-4 rotate-3 shadow-[2px_2px_0px_0px_#000]">
+                <BookOpen size={32} />
+              </div>
+              <p className="font-bold text-lg text-black uppercase tracking-wide">You haven't RSVP'd to any events yet.</p>
             </div>
           )}
         </div>

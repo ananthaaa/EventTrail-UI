@@ -6,25 +6,8 @@ import { RsvpContext } from '../../context/RsvpContext';
 import mockVenues from '../../data/venues.json';
 import ImageUploadZone from '../../components/ui/ImageUploadZone';
 import { ArrowLeft, Plus, Trash2, Save, MapPin, X } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import L from 'leaflet';
-
-// Fix Leaflet's default icon path issues
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
-
-function LocationPicker({ position, setPosition }) {
-  useMapEvents({
-    click(e) {
-      setPosition(e.latlng);
-    },
-  });
-  return position ? <Marker position={position} draggable={true} eventHandlers={{ dragend: (e) => setPosition(e.target.getLatLng()) }} /> : null;
-}
+import { Marker } from 'react-leaflet';
+import CampusMap from '../../components/ui/CampusMap';
 
 const AdminVenueUpload = () => {
   const navigate = useNavigate();
@@ -194,13 +177,11 @@ const AdminVenueUpload = () => {
                 </span>
               </div>
               <div className="h-80 w-full relative z-0">
-                <MapContainer center={[mapPosition.lat, mapPosition.lng]} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%', zIndex: 0 }}>
-                  <TileLayer
-                    attribution='&copy; OpenStreetMap'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  <LocationPicker position={mapPosition} setPosition={setMapPosition} />
-                </MapContainer>
+                <CampusMap onLocationSelect={setMapPosition}>
+                  {mapPosition && (
+                    <Marker position={mapPosition} draggable={true} eventHandlers={{ dragend: (e) => setMapPosition(e.target.getLatLng()) }} />
+                  )}
+                </CampusMap>
               </div>
               <div className="p-4 text-sm text-text-secondary">
                 Click anywhere on the map to set the entrance marker. Drag the marker to fine-tune its position.
