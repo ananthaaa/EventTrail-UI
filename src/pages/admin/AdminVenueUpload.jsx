@@ -112,18 +112,18 @@ const AdminVenueUpload = () => {
       <div className="mb-6 flex">
         <Link
           to="/admin"
-          className="inline-flex items-center gap-2 text-sm text-text-tertiary hover:text-accent transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-bold text-black uppercase tracking-wider hover:underline underline-offset-4 decoration-2"
         >
           <ArrowLeft size={16} />
           Back to Dashboard
         </Link>
       </div>
 
-      <div className="mb-12">
-        <h1 className="font-display font-bold text-4xl text-text-primary tracking-tight mb-2">
+      <div className="mb-12 bg-white border-3 border-black p-8 neo-shadow max-w-4xl">
+        <h1 className="font-display font-black text-4xl text-black tracking-tight uppercase mb-2">
           Venue Setup
         </h1>
-        <p className="text-text-secondary">Configure floor plans and navigation waypoints.</p>
+        <p className="text-black/70 font-bold uppercase tracking-wider text-sm">Configure floor plans and navigation waypoints.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -132,14 +132,14 @@ const AdminVenueUpload = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-bg-surface border border-border-subtle rounded-3xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6"
+            className="bg-white border-3 border-black p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 neo-shadow"
           >
             <div className="grow">
-              <label className="block text-sm font-medium text-text-primary mb-2">Target Event:</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Target Event:</label>
               <select
                 value={selectedEventId}
                 onChange={handleEventChange}
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
               >
                 {events.map((evt) => (
                   <option key={evt.id} value={evt.id}>{evt.title}</option>
@@ -148,12 +148,12 @@ const AdminVenueUpload = () => {
             </div>
             
             <div className="w-full md:w-1/3">
-              <label className="block text-sm font-medium text-text-primary mb-2">Building:</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Building:</label>
               <input
                 type="text"
                 value={building}
                 onChange={(e) => setBuilding(e.target.value)}
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
               />
             </div>
           </motion.div>
@@ -190,7 +190,7 @@ const AdminVenueUpload = () => {
 
             <div className="space-y-4 pt-4 border-t border-border-subtle">
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium text-text-primary">Indoor Directions</label>
+                <label className="block text-sm font-black text-black uppercase tracking-wider">Indoor Directions</label>
                 <button
                   type="button"
                   onClick={handleAddIndoorStep}
@@ -303,7 +303,7 @@ const AdminVenueUpload = () => {
             </div>
 
             <div className="border-t border-border-subtle pt-6 space-y-4">
-              <label className="block text-sm font-medium text-text-primary">Add New Waypoint</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider">Add New Waypoint</label>
               
               <input type="text" value={newInstruction} onChange={(e) => setNewInstruction(e.target.value)} placeholder="Instruction (e.g. Turn right)" className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:border-accent transition-colors" />
               <input type="text" value={newDetails} onChange={(e) => setNewDetails(e.target.value)} placeholder="Details (e.g. Near elevators)" className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-sm text-text-primary focus:outline-none focus:border-accent transition-colors" />
@@ -314,18 +314,22 @@ const AdminVenueUpload = () => {
                   <input type="number" value={newX} onChange={(e) => setNewX(e.target.value)} className="w-full bg-bg-primary border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary font-mono focus:outline-none focus:border-accent" min="20" max="480" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-text-secondary mb-1">Y Coord (px)</label>
-                  <input type="number" value={newY} onChange={(e) => setNewY(e.target.value)} className="w-full bg-bg-primary border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary font-mono focus:outline-none focus:border-accent" min="20" max="330" />
+                  <label className="block text-xs font-black text-black uppercase mb-1">X Coord</label>
+                  <input type="number" value={newX} onChange={(e) => setNewX(e.target.value)} className="w-full bg-white border-3 border-black px-3 py-2 text-sm text-black font-mono font-bold focus:outline-none" min="20" max="480" />
+                </div>
+                <div>
+                  <label className="block text-xs font-black text-black uppercase mb-1">Y Coord</label>
+                  <input type="number" value={newY} onChange={(e) => setNewY(e.target.value)} className="w-full bg-white border-3 border-black px-3 py-2 text-sm text-black font-mono font-bold focus:outline-none" min="20" max="330" />
                 </div>
               </div>
 
-              <button onClick={handleAddWaypoint} className="w-full bg-bg-surface-alt hover:bg-bg-primary border border-border-subtle hover:border-accent text-text-primary font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-colors mt-2">
+              <button onClick={handleAddWaypoint} className="w-full bg-pastel-mint border-3 border-black text-black px-6 py-3 font-black uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_#000] transition-all flex items-center justify-center gap-2">
                 <Plus size={16} /> Add Waypoint
               </button>
             </div>
 
-            <div className="border-t border-border-subtle pt-6">
-              <button onClick={handleSaveConfiguration} className="w-full bg-accent hover:bg-accent-hover text-accent-contrast font-medium py-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-lg shadow-accent/20">
+            <div className="border-t-3 border-black pt-6">
+              <button onClick={handleSaveConfiguration} className="w-full bg-pastel-peach border-3 border-black text-black px-8 py-3 font-black uppercase tracking-wider shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all flex items-center justify-center gap-2">
                 <Save size={18} /> Save Setup
               </button>
             </div>

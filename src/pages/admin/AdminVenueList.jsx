@@ -21,9 +21,9 @@ const AdminVenueList = () => {
         <div>
           <button
             onClick={() => navigate('/admin/venue-upload')}
-            className="flex items-center gap-2 py-3 px-6 bg-accent-blue text-white text-lg font-black uppercase tracking-widest border-4 border-black hover:bg-black transition-colors"
+            className="bg-pastel-peach border-3 border-black text-black px-6 py-3 font-black uppercase tracking-wider shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all flex items-center justify-center gap-2"
           >
-            <Plus size={20} />
+            <Plus size={20} strokeWidth={3} />
             Add Venue
           </button>
         </div>

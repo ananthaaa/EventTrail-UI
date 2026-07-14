@@ -112,51 +112,51 @@ const AdminEventForm = () => {
         </Link>
       </div>
 
-      <div className="mb-12">
-        <h1 className="font-display font-bold text-4xl text-text-primary tracking-tight mb-2">
+      <div className="mb-12 bg-white border-3 border-black p-8 neo-shadow max-w-4xl">
+        <h1 className="font-display font-black text-4xl text-black tracking-tight uppercase mb-2">
           Create New Event
         </h1>
-        <p className="text-text-secondary">Draft a new event to publish on the platform.</p>
+        <p className="text-black/70 font-bold uppercase tracking-wider text-sm">Draft a new event to publish on the platform.</p>
       </div>
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-bg-surface border border-border-subtle rounded-3xl p-8 md:p-10 max-w-4xl"
+        className="bg-white border-3 border-black p-8 md:p-10 max-w-4xl neo-shadow"
       >
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-2">Event Title</label>
+            <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Event Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Design Systems Workshop"
-              className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+              className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
               required
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">Date</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Date</label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
                 required
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">Time Schedule</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Time Schedule</label>
               <input
                 type="text"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 placeholder="e.g. 10:00 AM - 01:00 PM"
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
                 required
               />
             </div>
@@ -164,11 +164,11 @@ const AdminEventForm = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">Category</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
               >
                 {['Tech', 'Sports', 'Academic', 'Arts'].map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
@@ -177,11 +177,11 @@ const AdminEventForm = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">Faculty</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Faculty</label>
               <select
                 value={faculty}
                 onChange={(e) => setFaculty(e.target.value)}
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
               >
                 {['Science', 'Medicine', 'Engineering', 'All Faculties'].map((fac) => (
                   <option key={fac} value={fac}>{fac}</option>
@@ -190,12 +190,12 @@ const AdminEventForm = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">Total Seat Capacity</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Total Seat Capacity</label>
               <input
                 type="number"
                 value={seatsTotal}
                 onChange={(e) => setSeatsTotal(e.target.value)}
-                className="w-full bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
                 required
                 min="1"
               />
@@ -212,22 +212,22 @@ const AdminEventForm = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-2">Event Description</label>
+            <label className="block text-sm font-black text-black uppercase tracking-wider mb-2">Event Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Detailed description of the event..."
-              className="w-full h-32 bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-accent transition-colors resize-none"
+              className="w-full h-32 bg-white border-3 border-black px-4 py-3 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors resize-none"
             />
           </div>
 
           <div className="border-t border-border-subtle pt-8">
             <div className="flex justify-between items-center mb-6">
-              <label className="block text-sm font-medium text-text-primary">Event Schedule</label>
+              <label className="block text-sm font-black text-black uppercase tracking-wider">Event Schedule</label>
               <button
                 type="button"
                 onClick={handleAddScheduleRow}
-                className="flex items-center gap-1 text-sm font-medium bg-bg-surface-alt border border-border-subtle hover:border-accent text-text-primary px-3 py-1.5 rounded-full transition-colors"
+                className="flex items-center gap-2 text-sm font-black bg-pastel-mint border-3 border-black hover:-translate-y-1 text-black px-4 py-2 uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] transition-all"
               >
                 <Plus size={14} /> Add Session
               </button>
@@ -235,7 +235,7 @@ const AdminEventForm = () => {
 
             <div className="space-y-4">
               {scheduleItems.map((item, idx) => (
-                <div key={idx} className="flex gap-4 items-start bg-bg-primary border border-border-subtle p-4 rounded-xl relative">
+                <div key={idx} className="flex gap-4 items-start bg-white border-3 border-black p-4 relative shadow-[2px_2px_0px_0px_#000]">
                   {scheduleItems.length > 1 && (
                     <button
                       type="button"
@@ -252,7 +252,7 @@ const AdminEventForm = () => {
                       value={item.time}
                       onChange={(e) => handleScheduleChange(idx, 'time', e.target.value)}
                       placeholder="Time"
-                      className="w-full bg-bg-surface border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent transition-colors"
+                      className="w-full bg-white border-3 border-black px-3 py-2 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
                     />
                   </div>
                   
@@ -262,14 +262,14 @@ const AdminEventForm = () => {
                       value={item.title}
                       onChange={(e) => handleScheduleChange(idx, 'title', e.target.value)}
                       placeholder="Session Title"
-                      className="w-full bg-bg-surface border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent transition-colors font-medium"
+                      className="w-full bg-white border-3 border-black px-3 py-2 text-black font-medium focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
                     />
                     <input
                       type="text"
                       value={item.desc}
                       onChange={(e) => handleScheduleChange(idx, 'desc', e.target.value)}
                       placeholder="Session Description"
-                      className="w-full bg-bg-surface border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-secondary focus:outline-none focus:border-accent transition-colors"
+                      className="w-full bg-white border-3 border-black px-3 py-2 text-black/70 font-bold focus:outline-none focus:bg-pastel-yellow shadow-[4px_4px_0px_0px_#000] transition-colors"
                     />
                   </div>
                 </div>
@@ -304,11 +304,11 @@ const AdminEventForm = () => {
 
             <div className="space-y-4">
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium text-text-primary">Indoor Directions</label>
+                <label className="block text-sm font-black text-black uppercase tracking-wider">Indoor Directions</label>
                 <button
                   type="button"
                   onClick={handleAddIndoorStep}
-                  className="flex items-center gap-1 text-sm font-medium bg-bg-surface-alt border border-border-subtle hover:border-accent text-text-primary px-3 py-1.5 rounded-full transition-colors"
+                  className="flex items-center gap-2 text-sm font-black bg-pastel-mint border-3 border-black hover:-translate-y-1 text-black px-4 py-2 uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] transition-all"
                 >
                   <Plus size={14} /> Add Step
                 </button>
@@ -341,7 +341,7 @@ const AdminEventForm = () => {
           <div className="border-t border-border-subtle pt-8 flex justify-end">
             <button
               type="submit"
-              className="bg-accent hover:bg-accent-hover text-accent-contrast font-medium px-8 py-3 rounded-full flex items-center justify-center gap-2 transition-colors w-full sm:w-auto"
+              className="bg-pastel-peach border-3 border-black text-black px-8 py-3 font-black uppercase tracking-wider shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               <Save size={18} />
               Publish Event
