@@ -162,12 +162,12 @@ const AdminVenueUpload = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-bg-surface border border-border-subtle rounded-3xl p-6 md:p-8 space-y-6"
+            className="bg-white border-3 border-black p-6 md:p-8 space-y-6 neo-shadow"
           >
-            <h2 className="font-display font-bold text-2xl text-text-primary">1. Map & Indoor Directions</h2>
+            <h2 className="font-display font-black text-2xl text-black uppercase">1. Map & Indoor Directions</h2>
 
-            <div className="bg-bg-primary border border-border-subtle rounded-xl overflow-hidden mb-6">
-              <div className="p-4 border-b border-border-subtle flex justify-between items-center bg-bg-surface">
+            <div className="bg-white border-3 border-black mb-6 shadow-[4px_4px_0px_0px_#000]">
+              <div className="p-4 border-b-3 border-black flex justify-between items-center bg-white">
                 <span className="font-medium text-text-primary flex items-center gap-2">
                   <MapPin size={18} className="text-accent" />
                   Building Entrance Pin
@@ -188,20 +188,20 @@ const AdminVenueUpload = () => {
               </div>
             </div>
 
-            <div className="space-y-4 pt-4 border-t border-border-subtle">
+            <div className="space-y-4 pt-4 border-t-3 border-black">
               <div className="flex justify-between items-center mb-2">
                 <label className="block text-sm font-black text-black uppercase tracking-wider">Indoor Directions</label>
                 <button
                   type="button"
                   onClick={handleAddIndoorStep}
-                  className="flex items-center gap-1 text-sm font-medium bg-bg-surface-alt border border-border-subtle hover:border-accent text-text-primary px-3 py-1.5 rounded-full transition-colors"
+                  className="flex items-center gap-2 text-sm font-black bg-pastel-mint border-3 border-black hover:-translate-y-1 text-black px-4 py-2 uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] transition-all"
                 >
                   <Plus size={14} /> Add Step
                 </button>
               </div>
 
               {indoorSteps.map((step, idx) => (
-                <div key={idx} className="flex gap-4 items-center bg-bg-primary border border-border-subtle p-3 rounded-xl">
+                <div key={idx} className="flex gap-4 items-center bg-white border-3 border-black p-3 shadow-[2px_2px_0px_0px_#000]">
                   <span className="font-bold text-text-tertiary w-6 text-right">{idx + 1}.</span>
                   <input
                     type="text"
@@ -228,16 +228,16 @@ const AdminVenueUpload = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-bg-surface border border-border-subtle rounded-3xl p-6 md:p-8 space-y-6"
+            className="bg-white border-3 border-black p-6 md:p-8 space-y-6 neo-shadow"
           >
-            <h2 className="font-display font-bold text-2xl text-text-primary">2. Floor Plan SVG Upload</h2>
+            <h2 className="font-display font-black text-2xl text-black uppercase">2. Floor Plan SVG Upload</h2>
             <ImageUploadZone 
               onUpload={setSvgUrl} 
               previewUrl={svgUrl} 
               onClear={() => setSvgUrl('')} 
             />
 
-            <div className="border border-border-subtle aspect-[4/3] w-full max-w-xl mx-auto bg-bg-primary relative rounded-xl overflow-hidden flex items-center justify-center">
+            <div className="border-3 border-black aspect-[4/3] w-full max-w-xl mx-auto bg-pastel-yellow relative flex items-center justify-center shadow-[4px_4px_0px_0px_#000]">
               <svg className="w-full h-full" viewBox="0 0 500 350">
                 {[...Array(7)].map((_, i) => (
                   <line key={i} x1={(i + 1) * 60} y1="0" x2={(i + 1) * 60} y2="350" stroke="#333" strokeWidth="1" strokeDasharray="4,4" opacity="0.3" />
@@ -254,7 +254,7 @@ const AdminVenueUpload = () => {
                   <path
                     d={waypoints.map((wp, i) => `${i === 0 ? 'M' : 'L'} ${wp.x} ${wp.y}`).join(' ')}
                     fill="none"
-                    stroke="#FF5A1F"
+                    stroke="#000"
                     strokeWidth="4"
                     strokeDasharray="8,8"
                   />
