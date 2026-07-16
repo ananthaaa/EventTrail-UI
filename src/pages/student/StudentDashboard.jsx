@@ -9,6 +9,9 @@ import {
   Sparkles, Calendar, MapPin, ArrowRight, Ticket, Users,
   Star, TrendingUp, BookOpen
 } from 'lucide-react';
+import CampusMap from '../../components/ui/CampusMap';
+import { Marker, Popup } from 'react-leaflet';
+import mockVenues from '../../data/venues.json';
 
 const StudentDashboard = () => {
   const { currentUser } = useContext(RoleContext);
@@ -83,6 +86,48 @@ const StudentDashboard = () => {
           })}
         </div>
 
+        {/* Campus Map with Events */}
+        <div className="bg-white border-3 border-black neo-shadow flex flex-col mb-10">
+          <div className="p-6 border-b-3 border-black flex items-center justify-between bg-pastel-yellow">
+            <div className="flex items-center gap-3">
+              <MapPin size={24} strokeWidth={2.5} className="text-black" />
+              <h2 className="font-display font-black text-xl uppercase tracking-tight m-0">Live Campus Map</h2>
+            </div>
+            <p className="text-xs font-bold text-black/70 uppercase">Click pins for live event details</p>
+          </div>
+          <div className="h-[500px] w-full relative z-0">
+            <CampusMap>
+              {events.filter(e => e.seatsAvailable > 0 || rsvpEventIds.includes(e.id)).map(evt => {
+                const venue = mockVenues.find(v => v.id === evt.venueId);
+                if (!venue) return null;
+                return (
+                  <Marker key={evt.id} position={venue.outdoorCoordinates}>
+                    <Popup className="neo-popup">
+                      <div className="min-w-[200px] pb-1">
+                        <img src={evt.coverImage} alt={evt.title} className="w-full h-24 object-cover border-2 border-black mb-2" />
+                        <h4 className="font-display font-black uppercase text-sm mb-1 text-black">{evt.title}</h4>
+                        <p className="text-xs font-bold text-black/70 uppercase mb-2">{evt.time} • {venue.name}</p>
+                        
+                        <div className="flex justify-between items-center mt-2 border-t-2 border-black border-dashed pt-2">
+                          <span className="text-xs font-bold uppercase text-black">
+                            {evt.seatsAvailable > 0 ? `${evt.seatsAvailable} seats left` : 'Waitlist'}
+                          </span>
+                          <button 
+                            onClick={() => navigate(`/student/events/${evt.id}`)}
+                            className="bg-pastel-mint border-2 border-black text-black text-xs font-black uppercase px-2 py-1 hover:bg-black hover:text-white transition-colors cursor-pointer neo-clickable"
+                          >
+                            Details
+                          </button>
+                        </div>
+                      </div>
+                    </Popup>
+                  </Marker>
+                );
+              })}
+            </CampusMap>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
           
           {/* Upcoming RSVPs */}
@@ -109,29 +154,28 @@ const StudentDashboard = () => {
                 </button>
               </div>
             ) : (
-              <div className="p-6 flex flex-col gap-4 grow">
+              <div className="p-6 flex flex-col gap-5 grow bg-white">
                 {upcomingRsvps.map((evt) => (
                   <div
                     key={evt.id}
                     onClick={() => navigate(`/student/events/${evt.id}`)}
-                    className="flex items-center gap-4 p-3 border-2 border-black bg-white hover:bg-pastel-yellow transition-colors cursor-pointer neo-clickable"
+                    className="flex items-center gap-4 p-3 border-3 border-black bg-white hover:bg-pastel-yellow transition-all cursor-pointer shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-y-1"
                   >
-                    <img src={evt.coverImage} alt={evt.title} className="w-16 h-16 object-cover border-2 border-black shadow-[2px_2px_0px_0px_#000] shrink-0" />
+                    <img src={evt.coverImage} alt={evt.title} className="w-20 h-20 object-cover border-3 border-black shadow-[2px_2px_0px_0px_#000] shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="font-display font-black text-base uppercase truncate mb-1">{evt.title}</div>
-                      <div className="flex items-center gap-2 text-xs font-bold text-black/60 uppercase tracking-wider">
-                        <span>{evt.date}</span>
-                        <span className="w-1 h-1 bg-black/40 rounded-full" />
+                      <div className="font-display font-black text-lg uppercase truncate mb-1 text-black">{evt.title}</div>
+                      <div className="flex items-center gap-2 text-xs font-bold text-black/70 uppercase tracking-wider">
+                        <span className="bg-pastel-mint px-2 py-0.5 border-2 border-black">{evt.date}</span>
                         <span className="truncate">{evt.faculty}</span>
                       </div>
                     </div>
-                    <Badge variant="mint" className="hidden sm:inline-flex shrink-0">RSVP'd</Badge>
+                    <Badge variant="mint" className="hidden sm:inline-flex shrink-0 shadow-[2px_2px_0px_0px_#000]">RSVP'd</Badge>
                   </div>
                 ))}
                 {rsvpEventIds.length > 4 && (
                   <button
                     onClick={() => navigate('/student/events')}
-                    className="w-full mt-2 py-3 border-2 border-black bg-white font-bold text-xs uppercase tracking-wide hover:bg-black hover:text-white transition-colors"
+                    className="w-full mt-2 py-4 border-3 border-black bg-white font-black text-sm uppercase tracking-wider hover:bg-black hover:text-white transition-colors shadow-[4px_4px_0px_0px_#000]"
                   >
                     View all {rsvpEventIds.length} RSVPs →
                   </button>
@@ -155,9 +199,9 @@ const StudentDashboard = () => {
               </button>
             </div>
 
-            <div className="p-6 flex flex-col gap-4 grow">
+            <div className="p-6 flex flex-col gap-5 grow bg-white">
               {recommended.length === 0 ? (
-                <div className="p-8 text-center text-black/50 font-bold uppercase text-sm h-full flex items-center justify-center">
+                <div className="p-8 text-center text-black font-black uppercase text-sm h-full flex items-center justify-center border-3 border-black border-dashed bg-pastel-mint">
                   You've RSVP'd for all available events! 🎉
                 </div>
               ) : (
@@ -165,19 +209,19 @@ const StudentDashboard = () => {
                   <div
                     key={evt.id}
                     onClick={() => navigate(`/student/events/${evt.id}`)}
-                    className="flex items-center gap-4 p-3 border-2 border-black bg-white hover:bg-pastel-mint transition-colors cursor-pointer neo-clickable"
+                    className="flex items-center gap-4 p-3 border-3 border-black bg-white hover:bg-pastel-peach transition-all cursor-pointer shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-y-1"
                   >
-                    <img src={evt.coverImage} alt={evt.title} className="w-16 h-16 object-cover border-2 border-black shadow-[2px_2px_0px_0px_#000] shrink-0" />
+                    <img src={evt.coverImage} alt={evt.title} className="w-20 h-20 object-cover border-3 border-black shadow-[2px_2px_0px_0px_#000] shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="font-display font-black text-base uppercase truncate mb-1">{evt.title}</div>
-                      <div className="flex items-center gap-2 text-xs font-bold text-black/60 uppercase tracking-wider">
-                        <span>{evt.date}</span>
+                      <div className="font-display font-black text-lg uppercase truncate mb-1 text-black">{evt.title}</div>
+                      <div className="flex items-center gap-2 text-xs font-bold text-black/70 uppercase tracking-wider">
+                        <span className="bg-pastel-yellow px-2 py-0.5 border-2 border-black">{evt.date}</span>
                       </div>
                     </div>
                     {evt.seatsAvailable > 0 ? (
-                      <Badge variant="yellow" className="shrink-0">{evt.seatsAvailable} left</Badge>
+                      <Badge variant="yellow" className="shrink-0 shadow-[2px_2px_0px_0px_#000]">{evt.seatsAvailable} left</Badge>
                     ) : (
-                      <Badge variant="dark" className="shrink-0">Waitlist</Badge>
+                      <Badge variant="dark" className="shrink-0 shadow-[2px_2px_0px_0px_#000]">Waitlist</Badge>
                     )}
                   </div>
                 ))
@@ -198,7 +242,7 @@ const StudentDashboard = () => {
             {[
               { label: 'Browse Events', icon: Calendar, to: '/student/events', bg: 'white' },
               { label: 'Explore Clubs', icon: Users, to: '/student/clubs', bg: 'mint' },
-              { label: 'Indoor Nav', icon: MapPin, to: '/student/navigate', bg: 'peach' },
+              { label: 'Campus Nav', icon: MapPin, to: '/student/navigate', bg: 'peach' },
               { label: 'My Profile', icon: BookOpen, to: '/student/profile', bg: 'yellow' },
             ].map(({ label, icon: Icon, to, bg }) => (
               <Card

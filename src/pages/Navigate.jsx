@@ -11,6 +11,9 @@ import { MapPin, Navigation, CheckCircle2, ChevronRight, ArrowLeft, Info, Compas
 import { Marker, Polyline } from 'react-leaflet';
 import CampusMap from '../components/ui/CampusMap';
 import L from 'leaflet';
+import RouteLayer from '../components/ui/RouteLayer';
+import { fetchPathNodes, fetchPathEdges } from '../services/mapService';
+import { buildAdjacencyList, findPathAStar } from '../utils/pathfinding';
 
 const studentIcon = L.divIcon({
   className: 'custom-student-icon',
@@ -73,6 +76,55 @@ const Navigate = () => {
   const [currentLat, setCurrentLat] = useState(startLat);
   const [currentLng, setCurrentLng] = useState(startLng);
   const [distanceRemaining, setDistanceRemaining] = useState(haversineDistance(startLat, startLng, destLat, destLng));
+
+  const [nodes, setNodes] = useState(null);
+  const [adjacency, setAdjacency] = useState(null);
+  const [computedPath, setComputedPath] = useState(null);
+  const [pathError, setPathError] = useState('');
+
+  useEffect(() => {
+    async function loadGraph() {
+      try {
+        const fetchedNodes = await fetchPathNodes();
+        const fetchedEdges = await fetchPathEdges();
+        setNodes(fetchedNodes);
+        setAdjacency(buildAdjacencyList(fetchedEdges));
+      } catch (e) {
+        console.error("Failed to load map data", e);
+      }
+    }
+    loadGraph();
+  }, []);
+
+  const getClosestNode = (lat, lng, nodesObj) => {
+    let closestId = null;
+    let minDistance = Infinity;
+    Object.entries(nodesObj).forEach(([id, node]) => {
+      const dist = haversineDistance(lat, lng, node.lat, node.lng);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestId = id;
+      }
+    });
+    return closestId;
+  };
+
+  useEffect(() => {
+    if (nodes && adjacency && currentPhase === 'outdoor') {
+      const startNodeId = getClosestNode(startLat, startLng, nodes);
+      const destNodeId = getClosestNode(destLat, destLng, nodes);
+      
+      const path = findPathAStar(startNodeId, destNodeId, adjacency, nodes);
+      if (path) {
+        setComputedPath(path);
+        setPathError('');
+      } else {
+        setComputedPath(null);
+        setPathError('No valid walking route found between these locations.');
+      }
+    }
+  }, [nodes, adjacency, startLat, startLng, destLat, destLng, currentPhase]);
+
 
   useEffect(() => {
     let timer;
@@ -186,9 +238,14 @@ const Navigate = () => {
           <div className="lg:col-span-2">
             <div className="bg-white border-3 border-black h-[500px] relative z-0 neo-shadow-lg">
               <CampusMap center={[(startLat + destLat)/2, (startLng + destLng)/2]}>
+                {pathError && (
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-red-100 border-2 border-red-500 text-red-700 px-4 py-2 z-[1000] font-bold shadow-md">
+                    {pathError}
+                  </div>
+                )}
                 <Marker position={[destLat, destLng]} />
                 <Marker position={[currentLat, currentLng]} icon={studentIcon} />
-                <Polyline positions={[[startLat, startLng], [destLat, destLng]]} pathOptions={{ color: '#000', dashArray: '8, 8', weight: 4 }} />
+                <RouteLayer path={computedPath} nodes={nodes} />
               </CampusMap>
 
               <div className="absolute bottom-6 left-6 right-6 bg-white border-3 border-black p-5 flex flex-col sm:flex-row justify-between items-center gap-4 z-10 shadow-[4px_4px_0px_0px_#000]">

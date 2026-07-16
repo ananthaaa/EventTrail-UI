@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapContainer, TileLayer, Rectangle, useMapEvents } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, Rectangle, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 // Fix for default Leaflet marker icons in React
@@ -22,9 +22,21 @@ const MapClickCapture = ({ onLocationSelect }) => {
   return null;
 };
 
+const MapResizer = () => {
+  const map = useMap();
+  useEffect(() => {
+    // Let container sizes settle before invalidating map size
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [map]);
+  return null;
+};
+
 const CampusMap = ({ children, onLocationSelect, center, zoom, style, className }) => {
-  // Default to the center of Adi Shankara Institute
-  const defaultCenter = center || [10.178461, 76.431595];
+  // Default to the center of the events
+  const defaultCenter = center || [10.1785, 76.4308];
   const defaultZoom = zoom || 18;
 
   // Campus bounds from OSM Way 253212720
@@ -38,17 +50,16 @@ const CampusMap = ({ children, onLocationSelect, center, zoom, style, className 
       center={defaultCenter} 
       zoom={defaultZoom} 
       minZoom={16}
-      maxBounds={campusBounds}
-      maxBoundsViscosity={1.0}
       scrollWheelZoom={false} 
       style={{ height: '100%', width: '100%', zIndex: 0, ...style }}
       className={className}
     >
+      <MapResizer />
       <TileLayer
         attribution='&copy; OpenStreetMap contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      
+
       {/* Campus Boundary Rectangle */}
       <Rectangle 
         bounds={campusBounds} 

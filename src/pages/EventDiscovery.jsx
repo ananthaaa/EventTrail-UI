@@ -173,7 +173,7 @@ const EventDiscovery = () => {
               onClick={() => navigate(`/student/events/${evt.id}`)}
               variant="white"
               shadowSize="medium"
-              className="flex flex-col h-full cursor-pointer"
+              className="flex flex-col h-full cursor-pointer hover:-translate-y-1 transition-transform"
             >
               {/* Event Cover Image */}
               <div className="h-48 border-b-3 border-black overflow-hidden relative">
@@ -184,39 +184,42 @@ const EventDiscovery = () => {
                 />
                 <Badge
                   variant={evt.category === 'Tech' ? 'mint' : evt.category === 'Sports' ? 'peach' : 'yellow'}
-                  className="absolute top-3 left-3 shadow-[1px_1px_0px_0px_#000]"
+                  className="absolute top-3 left-3 shadow-[2px_2px_0px_0px_#000] border-2 border-black"
                 >
                   {evt.category}
                 </Badge>
               </div>
 
               {/* Event Content */}
-              <div className="p-6 flex flex-col justify-between grow">
+              <div className="p-6 flex flex-col justify-between grow bg-white">
                 <div>
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black/60 mb-2">
-                    <span>{evt.date}</span>
-                    <span>•</span>
-                    <span>{evt.faculty}</span>
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="bg-pastel-yellow px-2 py-1 border-2 border-black text-xs font-black uppercase tracking-wider text-black">
+                      {evt.date}
+                    </span>
+                    <span className="bg-pastel-mint px-2 py-1 border-2 border-black text-xs font-black uppercase tracking-wider text-black">
+                      {evt.faculty}
+                    </span>
                   </div>
-                  <h3 className="font-display font-black text-lg uppercase leading-tight mb-3 hover:text-accent-yellow transition-colors line-clamp-2">
+                  <h3 className="font-display font-black text-xl uppercase leading-tight mb-3 text-black">
                     {evt.title}
                   </h3>
-                  <p className="text-xs font-semibold text-black/70 mb-4 line-clamp-2">
+                  <p className="text-sm font-bold text-black leading-relaxed mb-4 line-clamp-3">
                     {evt.description}
                   </p>
                 </div>
 
-                <div className="border-t-2 border-black/10 pt-4 mt-auto flex items-center justify-between">
-                  <span className="text-xs font-black uppercase text-black/80">
+                <div className="border-t-3 border-black border-dashed pt-4 mt-auto flex items-center justify-between">
+                  <span className="text-xs font-black uppercase text-black bg-pastel-peach px-2 py-1 border-2 border-black shadow-[2px_2px_0px_0px_#000]">
                     {evt.organizerName}
                   </span>
                   
                   {evt.seatsAvailable > 0 ? (
-                    <Badge variant="mint">
-                      {evt.seatsAvailable} seats left
+                    <Badge variant="yellow" className="shadow-[2px_2px_0px_0px_#000] border-2 border-black">
+                      {evt.seatsAvailable} left
                     </Badge>
                   ) : (
-                    <Badge variant="dark">
+                    <Badge variant="dark" className="shadow-[2px_2px_0px_0px_#000] border-2 border-black">
                       Waitlisted
                     </Badge>
                   )}

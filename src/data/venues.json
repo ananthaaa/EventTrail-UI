@@ -3,7 +3,7 @@
     "id": "science-hall-a",
     "name": "Science Auditorium A",
     "building": "Science Building Block B",
-    "outdoorCoordinates": [43.6532, -79.3832],
+    "outdoorCoordinates": [10.1782, 76.4305],
     "distance": "450m",
     "timeEstimation": "6 mins",
     "waypoints": [
@@ -48,7 +48,7 @@
     "id": "hub-room-202",
     "name": "Creative Hub Room 202",
     "building": "Student Activity Hub",
-    "outdoorCoordinates": [43.6540, -79.3820],
+    "outdoorCoordinates": [10.1785, 76.4308],
     "distance": "320m",
     "timeEstimation": "4 mins",
     "waypoints": [
@@ -86,7 +86,7 @@
     "id": "stadium-field-1",
     "name": "Main Athletics Field",
     "building": "Campus Stadium",
-    "outdoorCoordinates": [43.6515, -79.3855],
+    "outdoorCoordinates": [10.1789, 76.4312],
     "distance": "750m",
     "timeEstimation": "10 mins",
     "waypoints": [

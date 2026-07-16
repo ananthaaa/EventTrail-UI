@@ -54,12 +54,12 @@ const EventDetail = () => {
 
   return (
     <PageShell>
-      <div className="mb-6">
+      <div className="mb-8">
         <Link
           to="/student/events"
-          className="inline-flex items-center gap-2 text-sm text-text-tertiary hover:text-accent transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white border-3 border-black font-black uppercase tracking-wider text-xs hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={16} strokeWidth={3} />
           Back to Events
         </Link>
       </div>
@@ -71,47 +71,48 @@ const EventDetail = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-3xl overflow-hidden relative"
+            className="border-3 border-black neo-shadow-lg relative overflow-hidden bg-white mb-10 flex flex-col"
           >
-            <div className="aspect-[21/9] w-full">
+            <div className="aspect-[21/9] w-full border-b-3 border-black">
               <img src={event.coverImage} alt={event.title} className="w-full h-full object-cover" />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/50 to-transparent"></div>
             
-            <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+            <div className="p-8 md:p-12 w-full bg-pastel-mint">
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="px-3 py-1 rounded-full bg-accent/20 border border-accent/30 text-accent text-xs uppercase tracking-wider font-medium">{event.category}</span>
-                <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs uppercase tracking-wider font-medium">{event.faculty}</span>
+                <span className="px-3 py-1 bg-pastel-yellow border-2 border-black text-black text-xs font-black uppercase tracking-wider">{event.category}</span>
+                <span className="px-3 py-1 bg-white border-2 border-black text-black text-xs font-black uppercase tracking-wider">{event.faculty}</span>
               </div>
-              <h1 className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-tight mb-6">
+              <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-black tracking-tight leading-none mb-6">
                 {event.title}
               </h1>
               
-              <div className="flex flex-wrap items-center gap-6 text-sm text-white/80">
-                <div className="flex items-center gap-2"><Calendar size={18} /><span>{event.date}</span></div>
-                <div className="flex items-center gap-2"><Clock size={18} /><span>{event.time}</span></div>
-                <div className="flex items-center gap-2"><MapPin size={18} /><span>Room {event.venueId === 'science-hall-a' ? 'A' : '202'}</span></div>
+              <div className="flex flex-wrap items-center gap-6 text-sm font-bold text-black uppercase tracking-wider">
+                <div className="flex items-center gap-2"><Calendar size={18} strokeWidth={2.5} /><span>{event.date}</span></div>
+                <div className="flex items-center gap-2"><Clock size={18} strokeWidth={2.5} /><span>{event.time}</span></div>
+                <div className="flex items-center gap-2"><MapPin size={18} strokeWidth={2.5} /><span>Room {event.venueId === 'science-hall-a' ? 'A' : '202'}</span></div>
               </div>
             </div>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <h2 className="font-display font-bold text-2xl text-text-primary">About The Event</h2>
-              <p className="text-text-secondary leading-relaxed text-lg">
+            <div className="bg-white border-3 border-black p-8 neo-shadow h-full">
+              <h2 className="font-display font-black text-2xl text-black uppercase mb-6 flex items-center gap-3">
+                About The Event
+              </h2>
+              <p className="text-black font-bold leading-relaxed text-sm uppercase tracking-wide">
                 {event.description}
               </p>
             </div>
             
-            <div className="space-y-6">
-              <h2 className="font-display font-bold text-2xl text-text-primary">Schedule Timeline</h2>
-              <div className="space-y-6 border-l border-border-subtle ml-3 pl-6 relative">
+            <div className="bg-white border-3 border-black p-8 neo-shadow h-full">
+              <h2 className="font-display font-black text-2xl text-black uppercase mb-6">Schedule Timeline</h2>
+              <div className="space-y-6 border-l-4 border-black ml-3 pl-6 relative">
                 {event.schedule.map((item, idx) => (
                   <div key={idx} className="relative">
-                    <span className="absolute -left-[30px] top-1 w-3 h-3 bg-accent rounded-full ring-4 ring-bg-primary" />
-                    <span className="text-accent text-xs font-bold tracking-widest uppercase block mb-1">{item.time}</span>
-                    <h3 className="font-display font-bold text-lg text-text-primary mb-1">{item.title}</h3>
-                    <p className="text-text-secondary text-sm">{item.desc}</p>
+                    <span className="absolute -left-[35px] top-1 w-4 h-4 bg-pastel-yellow border-3 border-black rounded-none" />
+                    <span className="bg-black text-white px-2 py-0.5 text-xs font-black tracking-widest uppercase inline-block mb-2">{item.time}</span>
+                    <h3 className="font-display font-black text-lg text-black uppercase leading-tight mb-1">{item.title}</h3>
+                    <p className="text-black/80 font-bold text-xs uppercase tracking-wide">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -124,53 +125,53 @@ const EventDetail = () => {
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-bg-surface border border-border-subtle rounded-3xl p-8 space-y-8"
+            className="bg-white border-3 border-black p-8 neo-shadow-lg space-y-8"
           >
             <SeatMeter total={event.seatsTotal} available={event.seatsAvailable} />
             
             <button
               onClick={handleRsvpAction}
-              className={`w-full flex items-center justify-center gap-2 py-4 rounded-full font-medium transition-colors ${userRsvp ? 'bg-bg-surface-alt border border-success text-success hover:bg-success/10' : event.seatsAvailable > 0 ? 'bg-accent hover:bg-accent-hover text-accent-contrast' : 'bg-bg-surface-alt border border-border-subtle text-text-primary hover:bg-bg-primary'}`}
+              className={`w-full flex items-center justify-center gap-2 py-4 font-black uppercase tracking-wider text-sm border-3 border-black shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all ${userRsvp ? 'bg-pastel-mint text-black' : event.seatsAvailable > 0 ? 'bg-black text-white hover:bg-white hover:text-black' : 'bg-gray-300 text-black'}`}
             >
               {userRsvp ? (
-                <><CheckCircle2 size={18} /> View Ticket Confirmation</>
+                <><CheckCircle2 size={18} strokeWidth={3} /> View Ticket Confirmation</>
               ) : event.seatsAvailable > 0 ? (
-                <><Ticket size={18} /> RSVP & Get Ticket</>
+                <><Ticket size={18} strokeWidth={3} /> RSVP & Get Ticket</>
               ) : (
-                <><Users size={18} /> Join Waitlist</>
+                <><Users size={18} strokeWidth={3} /> Join Waitlist</>
               )}
             </button>
           </motion.div>
 
           {club && (
-            <div className="bg-bg-surface border border-border-subtle rounded-3xl p-6">
-              <h3 className="text-text-tertiary text-xs font-bold uppercase tracking-widest mb-4">Hosted By</h3>
-              <Link to={`/club/${club.id}`} className="flex items-center gap-4 group">
-                <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${club.bgGrad} flex items-center justify-center font-display font-bold text-xl text-bg-primary`}>
+            <div className="bg-pastel-peach border-3 border-black p-6 neo-shadow">
+              <h3 className="text-black text-xs font-black uppercase tracking-widest mb-4 border-b-2 border-black pb-2">Hosted By</h3>
+              <Link to={`/club/${club.id}`} className="flex items-center gap-4 group cursor-pointer active:translate-x-[1px] active:translate-y-[1px]">
+                <div className={`w-14 h-14 bg-white border-2 border-black shadow-[2px_2px_0px_0px_#000] flex items-center justify-center font-display font-black text-xl text-black`}>
                   {club.logo}
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-lg text-text-primary group-hover:text-accent transition-colors flex items-center gap-1">
-                    {club.name} <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-2 group-hover:translate-x-0" />
+                  <h4 className="font-display font-black text-lg text-black uppercase group-hover:underline flex items-center gap-1">
+                    {club.name} <ChevronRight size={16} strokeWidth={3} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                   </h4>
-                  <p className="text-text-secondary text-sm">View Organizer Profile</p>
+                  <p className="text-black/70 font-bold text-xs uppercase tracking-wide">View Organizer Profile</p>
                 </div>
               </Link>
             </div>
           )}
 
           {speakers.length > 0 && (
-            <div className="bg-bg-surface border border-border-subtle rounded-3xl p-6">
-              <h3 className="text-text-tertiary text-xs font-bold uppercase tracking-widest mb-4">Featured Speakers</h3>
+            <div className="bg-pastel-yellow border-3 border-black p-6 neo-shadow">
+              <h3 className="text-black text-xs font-black uppercase tracking-widest mb-4 border-b-2 border-black pb-2">Featured Speakers</h3>
               <div className="space-y-4">
                 {speakers.map((spk) => (
-                  <div key={spk.id} className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-white" style={{ backgroundColor: spk.avatarColor }}>
+                  <div key={spk.id} className="flex items-center gap-4 bg-white border-2 border-black p-3 shadow-[2px_2px_0px_0px_#000]">
+                    <div className="w-12 h-12 border-2 border-black flex items-center justify-center font-display font-black text-black bg-pastel-mint shadow-[2px_2px_0px_0px_#000]">
                       {spk.avatarText}
                     </div>
                     <div>
-                      <h4 className="font-display font-bold text-text-primary">{spk.name}</h4>
-                      <p className="text-text-secondary text-sm">{spk.role}</p>
+                      <h4 className="font-display font-black text-black uppercase">{spk.name}</h4>
+                      <p className="text-black/70 font-bold text-xs uppercase tracking-wider">{spk.role}</p>
                     </div>
                   </div>
                 ))}
